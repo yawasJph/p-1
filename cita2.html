@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres salir conmigo?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'heart-red': '#ff4d6d',
+                        'romantic-pink': '#fff0f3',
+                        'dark-pink': '#ff8fa3',
+                        'success-green': '#38b2ac',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .no-move {
+            position: absolute;
+            transition: transform 0.3s ease;
+        }
+
+        .heart-beat {
+            animation: pulse 1.2s infinite;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="flex flex-col justify-center items-center min-h-screen bg-romantic-pink bg-gradient-to-br from-pink-50 to-purple-50">
+    <!-- Contenedor principal -->
+    <div id="main-container" class="w-full max-w-3xl p-6 flex flex-col items-center">
+        <!-- Cabecera con corazón animado -->
+        <div class="mb-8 text-center">
+            <i class="fas fa-heart text-heart-red text-5xl mb-4 heart-beat"></i>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">¿Quieres salir conmigo?</h1>
+        </div>
+
+        <!-- Contenedor de botones -->
+        <div class="w-full max-w-md h-64 md:h-80 flex flex-col justify-center items-center">
+            <!-- Mensaje para móviles -->
+            <p class="text-center text-gray-600 mb-6 px-4 md:hidden">¡Intenta tocar el botón "No"!</p>
+
+            <div class="flex flex-col md:flex-row items-center gap-6 w-full justify-center">
+                <!-- Botón Sí -->
+                <button id="yes-button"
+                    class="yes bg-success-green hover:bg-teal-500 text-white px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-xl font-semibold focus:outline-none focus:ring-4 focus:ring-teal-300 z-10">
+                    ¡Sí! 💖
+                </button>
+
+                <!-- Botón No -->
+                <button id="no-button"
+                    class="no-move bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-xl font-semibold focus:outline-none focus:ring-4 focus:ring-red-300 z-10">
+                    No
+                </button>
+            </div>
+
+            <!-- Elemento decorativo -->
+            <div class="absolute -bottom-8 text-gray-500">
+                <p class="text-sm hidden md:block">* Intenta presionar el botón "No"</p>
+            </div>
+        </div>
+
+        <!-- Mensaje de aceptación (inicialmente oculto) -->
+        <div id="celebration" class="hidden w-full text-center mt-12 fade-in">
+            <div class="bg-white rounded-2xl shadow-xl p-8 max-w-2xl mx-auto border-2 border-pink-200">
+                <i class="fas fa-heart text-heart-red text-6xl mb-6 float-animation"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">¡Gracias por aceptar! 💕</h2>
+                <p class="text-xl text-gray-600 mb-6">Me has hecho la persona más feliz del mundo</p>
+                <div class="flex justify-center">
+                    <div class="bg-pink-100 rounded-lg p-4 max-w-lg">
+                        <p class="text-lg text-gray-700 italic">"Te prometo una cita inolvidable llena de sorpresas y
+                            momentos especiales"</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <div class="bg-purple-100 p-3 rounded-full">
+                        <i class="fas fa-wine-glass-alt text-purple-600 text-2xl"></i>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-utensils text-yellow-600 text-2xl"></i>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-film text-blue-600 text-2xl"></i>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <i class="fas fa-heart text-red-600 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti container -->
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none z-20 overflow-hidden hidden"></div>
+
+    <script>
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const celebration = document.getElementById('celebration');
+        const confettiContainer = document.getElementById('confetti-container');
+        const mainContainer = document.getElementById('main-container');
+
+        // Mensajes alternativos para el botón "No"
+        const noMessages = [
+            "No",
+            "¿Segura?",
+            "Piénsalo otra vez",
+            "¡Por favor!",
+            "Estoy muy triste",
+            "¿En serio?",
+            "No me hagas esto",
+            "Vamos, di que sí",
+            "Te lo ruego",
+            "Es mi sueño",
+            "Sería tan feliz"
+        ];
+        let messageIndex = 0;
+
+        // Función para crear confeti
+        function createConfetti() {
+            confettiContainer.innerHTML = '';
+            confettiContainer.classList.remove('hidden');
+
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+
+                // Colores aleatorios
+                const colors = ['#ff4d6d', '#ff8fa3', '#c9184a', '#ff758f', '#ffb3c1', '#38b2ac', '#a4133c'];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // Tamaño aleatorio
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+
+                // Posición inicial aleatoria
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = `-20px`;
+
+                // Duración y retraso aleatorios
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+                confetti.style.animation = `fall ${duration}s linear ${delay}s forwards`;
+
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // Función para mover el botón "No" aleatoriamente
+        function moveNoButtonRandomly() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            const buttonWidth = noButton.offsetWidth;
+            const buttonHeight = noButton.offsetHeight;
+
+            // Posiciones aleatorias dentro del viewport (dejando margen para el botón)
+            const randomX = Math.random() * (windowWidth - buttonWidth);
+            const randomY = Math.random() * (windowHeight - buttonHeight);
+
+            // Aplicar las posiciones calculadas
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+            noButton.style.position = "absolute"; // asegurar que se mueva
+        }
+
+        // Eventos para el botón "No"
+        noButton.addEventListener('mouseover', moveNoButtonRandomly);
+
+        // Para dispositivos táctiles
+        noButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButtonRandomly();
+
+            // Vibración en dispositivos móviles
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        });
+
+        // Evento para el botón "Sí"
+        yesButton.addEventListener('click', () => {
+            // Ocultar botones y mostrar celebración
+            yesButton.classList.add('hidden');
+            noButton.classList.add('hidden');
+            celebration.classList.remove('hidden');
+
+            // Crear confeti
+            createConfetti();
+
+            // Reproducir sonido de éxito (si está permitido)
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 523.25; // Do
+                gainNode.gain.value = 0.3;
+
+                oscillator.start();
+
+                // Cambiar frecuencia para crear una melodía
+                setTimeout(() => {
+                    oscillator.frequency.value = 659.25; // Mi
+                }, 200);
+
+                setTimeout(() => {
+                    oscillator.frequency.value = 783.99; // Sol
+                }, 400);
+
+                setTimeout(() => {
+                    oscillator.frequency.value = 1046.50; // Do alto
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.5);
+                }, 600);
+
+                setTimeout(() => {
+                    oscillator.stop();
+                }, 1000);
+            } catch (e) {
+                console.log("Audio no soportado en este navegador");
+            }
+        });
+
+        // Ajustar posición inicial del botón "No" en carga
+        window.addEventListener('load', () => {
+            // Centrar el botón "No" inicialmente
+            const containerRect = mainContainer.getBoundingClientRect();
+            noButton.style.left = `${containerRect.left + containerRect.width / 2 - noButton.offsetWidth / 2 + 100}px`;
+            noButton.style.top = `${containerRect.top + containerRect.height / 2 - noButton.offsetHeight / 2}px`;
+        });
+
+        // Ajustar posición en redimensionamiento
+        window.addEventListener('resize', () => {
+            noButton.style.position = 'absolute';
+            const containerRect = mainContainer.getBoundingClientRect();
+            noButton.style.left = `${containerRect.left + containerRect.width / 2 - noButton.offsetWidth / 2 + 100}px`;
+            noButton.style.top = `${containerRect.top + containerRect.height / 2 - noButton.offsetHeight / 2}px`;
+        });
+    </script>
+</body>
+
+</html>
